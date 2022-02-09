@@ -1,30 +1,29 @@
 #include "global.h"
 
+#include "proxy_logger.h"
+
 //------------------------------------------------------------------------------
-Global::ConsoleDestructor Global::m_cmdDestructor;
+Global::ObjectDestructor<WindowConsole> Global::m_cmdDestructor;
 WindowConsole* Global::m_console = nullptr;
 
-//------------------------------------------------------------------------------
-Global::ConsoleDestructor::~ConsoleDestructor() {
-  if (m_console) delete m_console;
-}
-
-void Global::ConsoleDestructor::setWindowConsole(WindowConsole* console) {
-  m_console = console;
-}
+Global::ObjectDestructor<BaseLogger> Global::m_loggerDestructor;
+BaseLogger* Global::m_logger = nullptr;
 
 //------------------------------------------------------------------------------
 WindowConsole& Global::console() {
   if (m_console == nullptr) {
     m_console = new WindowConsole();
     m_console->open();
-    m_cmdDestructor.setWindowConsole(m_console);
+    m_cmdDestructor.setObject(m_console);
   }
   return *m_console;
 }
 
 //------------------------------------------------------------------------------
-FileLoggerSingletone& Global::logger() {
-  static FileLoggerSingletone logger_instance;
-  return logger_instance;
+BaseLogger& Global::logger() {
+  if (m_logger == nullptr) {
+    m_logger = new ProxyLogger();
+    m_loggerDestructor.setObject(m_logger);
+  }
+  return *m_logger;
 }
