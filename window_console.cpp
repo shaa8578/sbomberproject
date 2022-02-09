@@ -79,7 +79,7 @@ void WindowConsole::initWindow() {
   cbreak();
   noecho();
   nonl();
-  halfdelay(10);
+  halfdelay(5);
   meta(stdscr, TRUE);
   intrflush(stdscr, FALSE);
   keypad(stdscr, TRUE);
