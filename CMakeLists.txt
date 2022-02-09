@@ -39,6 +39,7 @@ set(SOURCES_FILES
   plane.cpp
   sbomber.cpp
   tank.cpp
+  file_logger_singletone.cpp
 )
 
 set(HEADERS_FILES
@@ -55,6 +56,7 @@ set(HEADERS_FILES
   plane.h
   sbomber.h
   tank.h
+  file_logger_singletone.h
 )
 
 #-------------------------------------------------------------------------------

@@ -35,7 +35,7 @@ int main(void) {
     return EXIT_FAILURE;
   }
 
-  MyTools::OpenLogFile("log.txt");
+  Global::logger().openLogFile("log.txt");
 
   SBomber game;
 
@@ -54,7 +54,7 @@ int main(void) {
 
   } while ((!is_terminated) && (!game.GetExitFlag()));
 
-  MyTools::CloseLogFile();
+  Global::logger().closeLogFile();
 
   return EXIT_SUCCESS;
 }

@@ -38,7 +38,7 @@ SBomber::SBomber()
       deltaTime(0),
       fps(0),
       score(0) {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   Plane* p = new Plane;
   p->SetDirection(1, 0.1);
@@ -104,7 +104,7 @@ SBomber::~SBomber() {
 }
 
 void SBomber::MoveObjects() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
     if (vecDynamicObj[i] != nullptr) {
@@ -114,7 +114,7 @@ void SBomber::MoveObjects() {
 }
 
 void SBomber::CheckObjects() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   CheckPlaneAndLevelGUI();
   CheckBombsAndGround();
@@ -251,7 +251,7 @@ void SBomber::ProcessKBHit() {
     c = Global::console().getchar();
   }
 
-  WriteToLog(string(__FUNCTION__) + " was invoked. key = ", c);
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked. key = ", c);
 
   switch (c) {
   case 27:  // esc
@@ -277,7 +277,7 @@ void SBomber::ProcessKBHit() {
 }
 
 void SBomber::DrawFrame() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
     if (vecDynamicObj[i] != nullptr) {
@@ -298,7 +298,7 @@ void SBomber::DrawFrame() {
 }
 
 void SBomber::TimeStart() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
   startTime = GetTickCount64();
 }
 
@@ -307,12 +307,13 @@ void SBomber::TimeFinish() {
   deltaTime = uint16_t(finishTime - startTime);
   passedTime += deltaTime;
 
-  WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+  Global::logger().writeToLog(string(__FUNCTION__) + " deltaTime = ",
+                              (int)deltaTime);
 }
 
 void SBomber::DropBomb() {
   if (bombsNumber > 0) {
-    WriteToLog(string(__FUNCTION__) + " was invoked");
+    Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
     Plane* pPlane = FindPlane();
     double x = pPlane->GetX() + 4;

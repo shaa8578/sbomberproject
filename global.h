@@ -1,5 +1,6 @@
 #pragma once
 
+#include "file_logger_singletone.h"
 #include "window_console.h"
 
 //------------------------------------------------------------------------------
@@ -17,6 +18,7 @@ class Global {
   ~Global() {}
 
   static WindowConsole& console();
+  static FileLoggerSingletone& logger();
 
  private:
   Global();

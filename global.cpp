@@ -22,3 +22,9 @@ WindowConsole& Global::console() {
   }
   return *m_console;
 }
+
+//------------------------------------------------------------------------------
+FileLoggerSingletone& Global::logger() {
+  static FileLoggerSingletone logger_instance;
+  return logger_instance;
+}
