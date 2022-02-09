@@ -21,7 +21,7 @@ std::string currentDateTime() {
 
 //------------------------------------------------------------------------------
 FileLoggerSingletone::~FileLoggerSingletone() {
-  closeLogFile();
+  FileLoggerSingletone::closeLogFile();
 }
 
 //------------------------------------------------------------------------------
@@ -59,4 +59,9 @@ void FileLoggerSingletone::writeToLog(const std::string& str, double d) {
 }
 
 //------------------------------------------------------------------------------
-FileLoggerSingletone::FileLoggerSingletone() : m_logFile() {}
+FileLoggerSingletone::FileLoggerSingletone() : BaseLogger(), m_logFile() {}
+
+//------------------------------------------------------------------------------
+std::ofstream& FileLoggerSingletone::fileHandle() {
+  return m_logFile;
+}
