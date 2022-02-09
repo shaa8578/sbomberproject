@@ -4,7 +4,6 @@
 #include <iostream>
 
 #include "global.h"
-#include "my_tools.h"
 
 using namespace std;
 
@@ -28,15 +27,14 @@ bool Tank::isInside(double x1, double x2) const {
 }
 
 void Tank::Draw() const {
-  using namespace MyTools;
-  MyTools::SetColor(CC_Red);
-  GotoXY(x, y - 3);
+  Global::console().setColor(WindowConsole::WND_COLOR_RED);
+  Global::console().move(x, y - 3);
   Global::console() << "    #####";
-  GotoXY(x - 2, y - 2);
+  Global::console().move(x - 2, y - 2);
   Global::console() << "#######   #";
-  GotoXY(x, y - 1);
+  Global::console().move(x, y - 1);
   Global::console() << "    #####";
-  GotoXY(x, y);
+  Global::console().move(x, y);
   Global::console() << " ###########";
   Global::console().refresh();
 }

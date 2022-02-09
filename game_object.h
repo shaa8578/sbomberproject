@@ -21,6 +21,6 @@ class GameObject {
   inline uint16_t GetWidth() const { return width; }
 
  protected:
-  double x, y;
+  int x, y;
   uint16_t width;
 };

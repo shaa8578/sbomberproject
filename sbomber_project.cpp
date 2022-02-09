@@ -8,7 +8,6 @@
 #include <stdexcept>
 
 #include "global.h"
-#include "my_tools.h"
 #include "sbomber.h"
 
 using namespace std;
@@ -35,7 +34,7 @@ int main(void) {
     return EXIT_FAILURE;
   }
 
-  MyTools::OpenLogFile("log.txt");
+  Global::logger().openLogFile("log.txt");
 
   SBomber game;
 
@@ -44,7 +43,7 @@ int main(void) {
 
     game.ProcessKBHit();
 
-    MyTools::ClrScr();
+    Global::console().clear();
 
     game.DrawFrame();
     game.MoveObjects();
@@ -54,7 +53,7 @@ int main(void) {
 
   } while ((!is_terminated) && (!game.GetExitFlag()));
 
-  MyTools::CloseLogFile();
+  Global::logger().closeLogFile();
 
   return EXIT_SUCCESS;
 }

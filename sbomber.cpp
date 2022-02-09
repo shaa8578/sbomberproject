@@ -8,11 +8,9 @@
 #include "global.h"
 #include "ground.h"
 #include "house.h"
-#include "my_tools.h"
 #include "tank.h"
 
 using namespace std;
-using namespace MyTools;
 
 //------------------------------------------------------------------------------
 namespace {
@@ -38,7 +36,7 @@ SBomber::SBomber()
       deltaTime(0),
       fps(0),
       score(0) {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   Plane* p = new Plane;
   p->SetDirection(1, 0.1);
@@ -48,8 +46,8 @@ SBomber::SBomber()
 
   LevelGUI* pGUI = new LevelGUI;
   pGUI->SetParam(passedTime, fps, bombsNumber, score);
-  const uint16_t maxX = GetMaxX();
-  const uint16_t maxY = GetMaxY();
+  const auto maxX = static_cast<uint16_t>(Global::console().maxX());
+  const auto maxY = static_cast<uint16_t>(Global::console().maxY());
   const uint16_t offset = 3;
   const uint16_t width = maxX - 7;
   pGUI->SetPos(offset, offset);
@@ -104,7 +102,7 @@ SBomber::~SBomber() {
 }
 
 void SBomber::MoveObjects() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
     if (vecDynamicObj[i] != nullptr) {
@@ -114,7 +112,7 @@ void SBomber::MoveObjects() {
 }
 
 void SBomber::CheckObjects() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   CheckPlaneAndLevelGUI();
   CheckBombsAndGround();
@@ -251,7 +249,7 @@ void SBomber::ProcessKBHit() {
     c = Global::console().getchar();
   }
 
-  WriteToLog(string(__FUNCTION__) + " was invoked. key = ", c);
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked. key = ", c);
 
   switch (c) {
   case 27:  // esc
@@ -277,7 +275,7 @@ void SBomber::ProcessKBHit() {
 }
 
 void SBomber::DrawFrame() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
     if (vecDynamicObj[i] != nullptr) {
@@ -291,14 +289,14 @@ void SBomber::DrawFrame() {
     }
   }
 
-  GotoXY(0, 0);
+  Global::console().move(0, 0);
   fps++;
 
   FindLevelGUI()->SetParam(passedTime, fps, bombsNumber, score);
 }
 
 void SBomber::TimeStart() {
-  WriteToLog(string(__FUNCTION__) + " was invoked");
+  Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
   startTime = GetTickCount64();
 }
 
@@ -307,12 +305,13 @@ void SBomber::TimeFinish() {
   deltaTime = uint16_t(finishTime - startTime);
   passedTime += deltaTime;
 
-  WriteToLog(string(__FUNCTION__) + " deltaTime = ", (int)deltaTime);
+  Global::logger().writeToLog(string(__FUNCTION__) + " deltaTime = ",
+                              (int)deltaTime);
 }
 
 void SBomber::DropBomb() {
   if (bombsNumber > 0) {
-    WriteToLog(string(__FUNCTION__) + " was invoked");
+    Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
 
     Plane* pPlane = FindPlane();
     double x = pPlane->GetX() + 4;
