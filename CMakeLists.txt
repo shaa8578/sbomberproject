@@ -42,6 +42,7 @@ set(SOURCES_FILES
 )
 
 set(HEADERS_FILES
+  base_logger.hpp
   global.h
   window_console.h
   bomb.h
