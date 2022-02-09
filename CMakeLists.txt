@@ -39,6 +39,7 @@ set(SOURCES_FILES
   sbomber.cpp
   tank.cpp
   file_logger_singletone.cpp
+  proxy_logger.cpp
 )
 
 set(HEADERS_FILES
@@ -56,6 +57,7 @@ set(HEADERS_FILES
   sbomber.h
   tank.h
   file_logger_singletone.h
+  proxy_logger.h
 )
 
 #-------------------------------------------------------------------------------
