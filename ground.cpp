@@ -3,18 +3,15 @@
 #include <cstring>
 
 #include "global.h"
-#include "my_tools.h"
-
-using namespace MyTools;
 
 //------------------------------------------------------------------------------
 
 void Crater::Draw() const {
   // Рисование воронки в 9 символов шириной
   if (width == SMALL_CRATER_SIZE) {
-    GotoXY(x - 4, y + 1);
+    Global::console().move(x - 4, y + 1);
     Global::console() << "==     ==";
-    GotoXY(x - 2, y + 2);
+    Global::console().move(x - 2, y + 2);
     Global::console() << "=====";
     Global::console().refresh();
   }
@@ -32,7 +29,7 @@ bool Crater::isInside(double xn) const {
 //------------------------------------------------------------------------------
 
 void Ground::Draw() const {
-  MyTools::SetColor(CC_Green);
+  Global::console().setColor(WindowConsole::WND_COLOR_GREEN);
 
   const size_t bufSize = width + 1;
   char* buf = new (std::nothrow) char[bufSize];
@@ -41,7 +38,7 @@ void Ground::Draw() const {
   }
 
   if (vecCrates.size() == 0) {
-    GotoXY(x, y);
+    Global::console().move(x, y);
     memset(buf, '=', bufSize);
     buf[bufSize - 1] = '\0';
     Global::console() << buf;
@@ -53,7 +50,7 @@ void Ground::Draw() const {
       buf[i - X] = c;
     }
 
-    GotoXY((double)X, y);
+    Global::console().move(x, y);
     buf[bufSize - 1] = '\0';
     Global::console() << buf;
 

@@ -35,7 +35,6 @@ set(SOURCES_FILES
   ground.cpp
   house.cpp
   level_gui.cpp
-  my_tools.cpp
   plane.cpp
   sbomber.cpp
   tank.cpp
@@ -52,7 +51,6 @@ set(HEADERS_FILES
   ground.h
   house.h
   level_gui.h
-  my_tools.h
   plane.h
   sbomber.h
   tank.h

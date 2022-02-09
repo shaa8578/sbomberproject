@@ -8,7 +8,6 @@
 #include <stdexcept>
 
 #include "global.h"
-#include "my_tools.h"
 #include "sbomber.h"
 
 using namespace std;
@@ -44,7 +43,7 @@ int main(void) {
 
     game.ProcessKBHit();
 
-    MyTools::ClrScr();
+    Global::console().clear();
 
     game.DrawFrame();
     game.MoveObjects();
