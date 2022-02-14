@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "bomb.h"
+#include "bomb_decorator.h"
 #include "global.h"
 #include "ground.h"
 #include "house.h"
@@ -125,7 +126,7 @@ void SBomber::CheckPlaneAndLevelGUI() {
 }
 
 void SBomber::CheckBombsAndGround() {
-  vector<Bomb*> vecBombs = FindAllBombs();
+  vector<DynamicObject*> vecBombs = FindAllBombs();
   Ground* pGround = FindGround();
   const double y = pGround->GetY();
   for (size_t i = 0; i < vecBombs.size(); i++) {
@@ -138,7 +139,7 @@ void SBomber::CheckBombsAndGround() {
   }
 }
 
-void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
+void SBomber::CheckDestoyableObjects(DynamicObject* pBomb) {
   vector<DestroyableGroundObject*> vecDestoyableObjects =
       FindDestoyableGroundObjects();
   const double size = pBomb->GetWidth();
@@ -211,12 +212,14 @@ Ground* SBomber::FindGround() const {
   return nullptr;
 }
 
-vector<Bomb*> SBomber::FindAllBombs() const {
-  vector<Bomb*> vecBombs;
+vector<DynamicObject*> SBomber::FindAllBombs() const {
+  vector<DynamicObject*> vecBombs;
 
   for (size_t i = 0; i < vecDynamicObj.size(); i++) {
-    Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i]);
-    if (pBomb != nullptr) {
+    if (Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i])) {
+      vecBombs.push_back(pBomb);
+    }
+    if (BombDecorator* pBomb = dynamic_cast<BombDecorator*>(vecDynamicObj[i])) {
       vecBombs.push_back(pBomb);
     }
   }
@@ -321,7 +324,7 @@ void SBomber::DropBomb() {
     double x = pPlane->GetX() + 4;
     double y = pPlane->GetY() + 2;
 
-    Bomb* pBomb = new Bomb;
+    auto pBomb = new BombDecorator();
     pBomb->SetDirection(0.3, 1);
     pBomb->SetSpeed(2);
     pBomb->SetPos(x, y);

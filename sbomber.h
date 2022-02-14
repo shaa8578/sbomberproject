@@ -26,7 +26,7 @@ class SBomber {
  private:
   void CheckPlaneAndLevelGUI();
   void CheckBombsAndGround();
-  void CheckDestoyableObjects(Bomb* pBomb);
+  void CheckDestoyableObjects(DynamicObject* pBomb);
 
   void DeleteDynamicObj(DynamicObject* pBomb);
   void DeleteStaticObj(GameObject* pObj);
@@ -35,7 +35,7 @@ class SBomber {
   Plane* FindPlane() const;
   LevelGUI* FindLevelGUI() const;
   std::vector<DestroyableGroundObject*> FindDestoyableGroundObjects() const;
-  std::vector<Bomb*> FindAllBombs() const;
+  std::vector<DynamicObject*> FindAllBombs() const;
 
   void DropBomb();
 

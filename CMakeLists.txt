@@ -32,6 +32,7 @@ set(SOURCES_FILES
   global.cpp
   window_console.cpp
   bomb.cpp
+  bomb_decorator.cpp
   ground.cpp
   house.cpp
   level_gui.cpp
@@ -45,6 +46,7 @@ set(HEADERS_FILES
   global.h
   window_console.h
   bomb.h
+  bomb_decorator.h
   destroyable_ground_object.h
   dynamic_object.h
   game_object.h
