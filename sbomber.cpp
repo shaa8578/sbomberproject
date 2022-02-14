@@ -156,8 +156,10 @@ void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
 void SBomber::DeleteDynamicObj(DynamicObject* pObj) {
   auto it = vecDynamicObj.begin();
   for (; it != vecDynamicObj.end(); it++) {
-    if (*it == pObj) {
+    auto cur_obj = static_cast<DynamicObject*>(*it);
+    if (cur_obj == pObj) {
       vecDynamicObj.erase(it);
+      delete cur_obj;
       break;
     }
   }
@@ -166,8 +168,10 @@ void SBomber::DeleteDynamicObj(DynamicObject* pObj) {
 void SBomber::DeleteStaticObj(GameObject* pObj) {
   auto it = vecStaticObj.begin();
   for (; it != vecStaticObj.end(); it++) {
-    if (*it == pObj) {
+    auto cur_obj = static_cast<DynamicObject*>(*it);
+    if (cur_obj == pObj) {
       vecStaticObj.erase(it);
+      delete cur_obj;
       break;
     }
   }
