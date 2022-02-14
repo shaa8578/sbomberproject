@@ -1,17 +1,19 @@
-#pragma once
+#include <fstream>
+#include <memory>
+#include <string>
 
 #include "base_logger.hpp"
 
+//------------------------------------------------------------------------------
 class Global;
-class ProxyLogger;
+class FileLoggerSingletone;
 
 //------------------------------------------------------------------------------
-class FileLoggerSingletone : public BaseLogger {
+class ProxyLogger : public BaseLogger {
   friend Global;
-  friend ProxyLogger;
 
  public:
-  virtual ~FileLoggerSingletone();
+  virtual ~ProxyLogger();
 
   void openLogFile(const std::string& fileName) override;
   void closeLogFile() override;
@@ -21,10 +23,12 @@ class FileLoggerSingletone : public BaseLogger {
   void writeToLog(const std::string& str, double d) override;
 
  protected:
-  std::ofstream& fileHandle() override;
+  virtual std::ofstream& fileHandle() override;
+  void addEventNo();
 
  private:
-  FileLoggerSingletone();
+  ProxyLogger();
 
-  std::ofstream m_logFile;
+  size_t m_eventNo;
+  std::unique_ptr<FileLoggerSingletone> m_wrapper;
 };
