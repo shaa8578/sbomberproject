@@ -55,6 +55,7 @@ set(HEADERS_FILES
   sbomber.h
   tank.h
   file_logger_singletone.h
+  command.hpp
 )
 
 #-------------------------------------------------------------------------------
