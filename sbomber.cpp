@@ -5,9 +5,11 @@
 #include <time.h>
 
 #include "bomb.h"
+#include "drop_bomb_command.h"
 #include "global.h"
 #include "ground.h"
 #include "house.h"
+#include "object_deleter.h"
 #include "tank.h"
 
 using namespace std;
@@ -154,27 +156,15 @@ void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
 }
 
 void SBomber::DeleteDynamicObj(DynamicObject* pObj) {
-  auto it = vecDynamicObj.begin();
-  for (; it != vecDynamicObj.end(); it++) {
-    auto cur_obj = static_cast<DynamicObject*>(*it);
-    if (cur_obj == pObj) {
-      vecDynamicObj.erase(it);
-      delete cur_obj;
-      break;
-    }
-  }
+  auto deleter =
+      std::make_unique<cmd::ObjectDeleter<DynamicObject>>(pObj, &vecDynamicObj);
+  deleter->execute();
 }
 
 void SBomber::DeleteStaticObj(GameObject* pObj) {
-  auto it = vecStaticObj.begin();
-  for (; it != vecStaticObj.end(); it++) {
-    auto cur_obj = static_cast<DynamicObject*>(*it);
-    if (cur_obj == pObj) {
-      vecStaticObj.erase(it);
-      delete cur_obj;
-      break;
-    }
-  }
+  auto deleter =
+      std::make_unique<cmd::ObjectDeleter<GameObject>>(pObj, &vecStaticObj);
+  deleter->execute();
 }
 
 vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
@@ -314,21 +304,9 @@ void SBomber::TimeFinish() {
 }
 
 void SBomber::DropBomb() {
-  if (bombsNumber > 0) {
-    Global::logger().writeToLog(string(__FUNCTION__) + " was invoked");
-
-    Plane* pPlane = FindPlane();
-    double x = pPlane->GetX() + 4;
-    double y = pPlane->GetY() + 2;
-
-    Bomb* pBomb = new Bomb;
-    pBomb->SetDirection(0.3, 1);
-    pBomb->SetSpeed(2);
-    pBomb->SetPos(x, y);
-    pBomb->SetWidth(SMALL_CRATER_SIZE);
-
-    vecDynamicObj.push_back(pBomb);
-    bombsNumber--;
+  auto drop_bomb_cmd(std::make_unique<cmd::DropBombCommand>(
+      FindPlane(), &bombsNumber, &vecDynamicObj));
+  if (drop_bomb_cmd->execute()) {
     score -= Bomb::BombCost;
   }
 }
