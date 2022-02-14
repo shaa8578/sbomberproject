@@ -15,8 +15,8 @@ class DynamicObject : public GameObject {
   }
 
   virtual void Move(uint16_t time) {
-    x += xDirction * speed * time * 0.001;
-    y += yDirection * speed * time * 0.001;
+    x += static_cast<int>(xDirction * speed * double(time) * 0.001);
+    y += static_cast<int>(yDirection * speed * double(time) * 0.001);
   };
 
  protected:
