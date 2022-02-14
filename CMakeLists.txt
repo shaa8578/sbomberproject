@@ -56,6 +56,7 @@ set(HEADERS_FILES
   tank.h
   file_logger_singletone.h
   command.hpp
+  object_deleter.h
 )
 
 #-------------------------------------------------------------------------------

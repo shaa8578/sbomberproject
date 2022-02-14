@@ -8,6 +8,7 @@
 #include "global.h"
 #include "ground.h"
 #include "house.h"
+#include "object_deleter.h"
 #include "tank.h"
 
 using namespace std;
@@ -154,27 +155,15 @@ void SBomber::CheckDestoyableObjects(Bomb* pBomb) {
 }
 
 void SBomber::DeleteDynamicObj(DynamicObject* pObj) {
-  auto it = vecDynamicObj.begin();
-  for (; it != vecDynamicObj.end(); it++) {
-    auto cur_obj = static_cast<DynamicObject*>(*it);
-    if (cur_obj == pObj) {
-      vecDynamicObj.erase(it);
-      delete cur_obj;
-      break;
-    }
-  }
+  auto deleter =
+      std::make_unique<cmd::ObjectDeleter<DynamicObject>>(pObj, &vecDynamicObj);
+  deleter->execute();
 }
 
 void SBomber::DeleteStaticObj(GameObject* pObj) {
-  auto it = vecStaticObj.begin();
-  for (; it != vecStaticObj.end(); it++) {
-    auto cur_obj = static_cast<DynamicObject*>(*it);
-    if (cur_obj == pObj) {
-      vecStaticObj.erase(it);
-      delete cur_obj;
-      break;
-    }
-  }
+  auto deleter =
+      std::make_unique<cmd::ObjectDeleter<GameObject>>(pObj, &vecStaticObj);
+  deleter->execute();
 }
 
 vector<DestroyableGroundObject*> SBomber::FindDestoyableGroundObjects() const {
