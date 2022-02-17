@@ -5,6 +5,7 @@
 #include <time.h>
 
 #include "bomb.h"
+#include "bomb_const_iterator.h"
 #include "global.h"
 #include "ground.h"
 #include "house.h"
@@ -213,14 +214,8 @@ Ground* SBomber::FindGround() const {
 
 vector<Bomb*> SBomber::FindAllBombs() const {
   vector<Bomb*> vecBombs;
-
-  for (size_t i = 0; i < vecDynamicObj.size(); i++) {
-    Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i]);
-    if (pBomb != nullptr) {
-      vecBombs.push_back(pBomb);
-    }
-  }
-
+  vecBombs.assign(BombConstIterator::begin(vecDynamicObj),
+                  BombConstIterator::end(vecDynamicObj));
   return vecBombs;
 }
 
