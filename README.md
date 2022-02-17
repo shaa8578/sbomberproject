@@ -38,3 +38,26 @@ void WriteToLog(const std::string& str, double d);
 и 3 функции для записи данных в лог-файл.
 
 Необходимо выполнить рефакторинг этих функций и поместить их внутрь «Одиночки» `FileLoggerSingletone`.
+
+### Применить шаблон «Итератор»
+
+**Задача**: с помощью паттерна «Итератор» искать и обходить все бомбы в массиве
+динамических объектов.
+
+В классе `SBomber` есть функция `FindAllBombs`:
+
+```c++
+std::vector<Bomb*> SBomber::FindAllBombs() const {
+  std::vector<Bomb*> vecBombs;
+
+  for (size_t i = 0; i < vecDynamicObj.size(); i++) {
+    Bomb* pBomb = dynamic_cast<Bomb*>(vecDynamicObj[i]);
+    if (pBomb != nullptr) {
+      vecBombs.push_back(pBomb);
+    }
+  }
+  return vecBombs;
+}
+```
+
+Для примера использовать паттерн «Итератор» вынести алгоритм поиска бомб в класс-итератор по динамическим объектам игры. Назвать класс можно BombIterator.
