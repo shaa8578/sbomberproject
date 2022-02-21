@@ -9,16 +9,16 @@ class GameObject {
 
   virtual void Draw() const = 0;
 
-  inline void SetPos(int nx, int ny) {
+  virtual void SetPos(int nx, int ny) {
     x = nx;
     y = ny;
   }
 
-  inline int GetY() const { return y; }
-  inline int GetX() const { return x; }
+  virtual int GetY() const { return y; }
+  virtual int GetX() const { return x; }
 
-  inline void SetWidth(uint16_t widthN) { width = widthN; }
-  inline uint16_t GetWidth() const { return width; }
+  virtual void SetWidth(uint16_t widthN) { width = widthN; }
+  virtual uint16_t GetWidth() const { return width; }
 
  protected:
   int x, y;

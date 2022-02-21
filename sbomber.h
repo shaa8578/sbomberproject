@@ -6,7 +6,7 @@
 #include "ground.h"
 #include "level_gui.h"
 #include "plane.h"
-#include "tank.h"
+#include "tank_adapter.h"
 
 class SBomber {
  public:
