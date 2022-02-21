@@ -2,16 +2,30 @@
 
 #include <stdint.h>
 
-#include "destroyable_ground_object.h"
-
-class Tank : public DestroyableGroundObject {
+//------------------------------------------------------------------------------
+class Tank {
  public:
-  bool isInside(double x1, double x2) const override;
+  Tank();
 
-  inline uint16_t GetScore() const override { return score; }
+  bool isInRange(double x1, double x2) const;
+  void paint() const;
 
-  void Draw() const override;
+  inline uint16_t score() const { return m_score; }
+
+  inline void setPos(int nx, int ny) {
+    m_x = nx;
+    m_y = ny;
+  }
+
+  inline int y() const { return m_y; }
+  inline int x() const { return m_x; }
+
+  inline void setWidth(uint16_t widthN) { m_width = widthN; }
+  inline uint16_t width() const { return m_width; }
 
  private:
-  const uint16_t score = 30;
+  int m_x;
+  int m_y;
+  uint16_t m_width;
+  const uint16_t m_score = 30;
 };
